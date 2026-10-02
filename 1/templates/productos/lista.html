@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}
-Productos
-{% endblock %}
+{% block title %}Productos{% endblock %}
 
 {% block content %}
-<h1>Lista de productos</h1>
+    <h1>Productos</h1>
 
-{% for producto in productos %}
-    <p>{{ producto.nombre }}</p>
-{% empty %}
-    <p>No hay productos.</p>
-{% endfor %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'producto_crear' %}">Nuevo producto</a>
+        <hr>
+    {% endif %}
 
+    {% for producto in productos %}
+        <h2>
+            <a href="{% url 'producto_detalle' producto.pk %}">{{ producto.nombre }}</a>
+        </h2>
+        <p>Categoría: {{ producto.categoria.nombre }}</p>
+        <p>Precio: {{ producto.precio }} €</p>
+    {% empty %}
+        <p>No existen productos.</p>
+    {% endfor %}
 {% endblock %}

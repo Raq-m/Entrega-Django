@@ -1,4 +1,3 @@
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.shortcuts import render, redirect, get_object_or_404
@@ -94,7 +93,7 @@ def producto_lista(request):
 
 def producto_detalle(request, pk):
     producto = get_object_or_404(Producto, pk=pk)
-    return render(request, "registration/detalle.html", {"producto": producto})
+    return render(request, "productos/detalle.html", {"producto": producto})
 
 
 @login_required
@@ -110,7 +109,7 @@ def producto_crear(request):
 
     return render(
         request,
-        "registration/formulario.html",
+        "productos/formulario.html",
         {"form": form, "titulo": "Nuevo producto"},
     )
 
@@ -130,7 +129,7 @@ def producto_editar(request, pk):
 
     return render(
         request,
-        "registration/formulario.html",
+        "productos/formulario.html",
         {"form": form, "titulo": "Editar producto"},
     )
 
@@ -145,6 +144,6 @@ def producto_eliminar(request, pk):
 
     return render(
         request,
-        "registration/eliminar.html",
+        "productos/eliminar.html",
         {"producto": producto},
     )
