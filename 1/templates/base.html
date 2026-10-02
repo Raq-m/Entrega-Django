@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{% block title %}Tienda Django{% endblock %}</title>
+
+    <style>
+      :root {
+        --fondo: #121212;
+        --panel: #1e1e1e;
+        --texto: #e0e0e0;
+        --acento: #7b5cd6;
+      }
+
+      body {
+        margin: 0;
+        background: var(--fondo);
+        color: var(--texto);
+        font-family: Arial, sans-serif;
+        line-height: 1.5;
+      }
+
+      a {
+        color: var(--acento);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      nav {
+        display: flex;
+        gap: 1.2rem;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: var(--panel);
+      }
+
+      nav .derecha {
+        margin-left: auto;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      nav form {
+        margin: 0;
+      }
+
+      main {
+        max-width: 700px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: var(--panel);
+        border-radius: 8px;
+      }
+
+      label {
+        display: block;
+        margin-top: 1rem;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 0.5rem;
+        background: var(--fondo);
+        color: var(--texto);
+        border: 1px solid #444;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button {
+        margin-top: 1rem;
+        padding: 0.5rem 1.2rem;
+        background: var(--acento);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      nav button {
+        margin: 0;
+      }
+
+      .errorlist {
+        color: #ff7b7b;
+        list-style: none;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <a href="{% url 'home' %}">Inicio</a>
+      <a href="{% url 'producto_lista' %}">Productos</a>
+
+      {% if user.is_authenticated %}
+      <a href="{% url 'categoria_lista' %}">Categorías</a>
+
+      <div class="derecha">
+        <span>{{ user.username }}</span>
+
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit">Salir</button>
+        </form>
+      </div>
+
+      {% else %}
+
+      <div class="derecha">
+        <a href="{% url 'login' %}">Entrar</a>
+        <a href="{% url 'register' %}">Registrarse</a>
+      </div>
+
+      {% endif %}
+    </nav>
+
+    <main>{% block content %} {% endblock %}</main>
+  </body>
+</html>
